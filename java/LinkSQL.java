@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.*;
+import java.awt.*;
 
 public class LinkSQL {
 
@@ -46,11 +47,11 @@ public class LinkSQL {
         System.out.println("请输入SQL语句");
         String sql = scanner.nextLine();
         /*  手动输入时的样例
-        CREATE TABLE test (id INTEGER not NULL,  first VARCHAR(255),  last VARCHAR(255),  age INTEGER,  PRIMARY KEY ( id ))
+        CREATE TABLE student (id INTEGER not NULL,  first VARCHAR(255),  last VARCHAR(255),  age INTEGER,  PRIMARY KEY ( id ))
             程序中输入时的样例
         String sql = "CREATE TABLE test " + "(id INTEGER not NULL, " + " first VARCHAR(255), " + " last VARCHAR(255), " + " age INTEGER, " + " PRIMARY KEY ( id ))"; 
         */
-        System.out.println(sql);
+        //System.out.println(sql);
         try {
             stmt = conn.createStatement();
         }
@@ -69,8 +70,26 @@ public class LinkSQL {
     }
     //对外提供一个方法来插入数据
     public void insertData() {
+        System.out.println("请输入插入数据的SQL语句");
         String sql = scanner.next();
-        System.out.println("请输入SQL语句");
+        try {
+            stmt = conn.createStatement();
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            stmt.executeUpdate(sql);
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    //对外提供一个方法来删除数据
+    public void deleteData() {
+        System.out.println("请输入删除数据的SQL语句");
+        //String sql = scanner.next();
+        String sql = "DROP table student";
         try {
             stmt = conn.createStatement();
         }
@@ -86,8 +105,9 @@ public class LinkSQL {
     }
     public static void main(String[] args) throws Exception {
         LinkSQL link = new LinkSQL();
-        link.createTable();
-        link.insertData();
+        //link.createTable();
+        //link.insertData();
+        //link.deleteData();
         closeConnection();
     }
 }
